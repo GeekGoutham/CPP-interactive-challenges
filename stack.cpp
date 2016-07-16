@@ -8,8 +8,9 @@ public:
 };
 
 class stack_list{
-public:
+
 	stack *top;
+public:
 	stack_list(): top(NULL){};
 	
 	void push(int d){
