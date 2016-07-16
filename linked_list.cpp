@@ -1,4 +1,6 @@
 #include<iostream>
+#include<stack>
+
 using namespace std;
 
 struct node{
@@ -100,6 +102,26 @@ void reverse_list_recursive(node *head){
         p->next = NULL;
 }
 
+void reverse_list_stack(node **head){
+	cout << "============= Reversing using Stack STL =============== "<<endl;
+	stack<node*> s;
+	node* temp = *head, *curr;
+	while(temp != NULL){
+		s.push(temp);
+		temp = temp->next;
+	}
+	*head = s.top();
+	s.pop();
+	curr = *head;
+	while(!s.empty()){
+		temp = s.top();
+		s.pop();
+		curr->next = temp;
+		curr = temp;
+	}
+	curr->next = NULL;	 
+}
+
 int main(){
         node* head = NULL;
         print(&head);
@@ -118,8 +140,10 @@ int main(){
         print_reverse_recursive(head);
         reverse(&head);
         print(&head);
-        cout << " Reversing using recursion"<< endl;
-        reverse_list_recursive(head);
+        //cout << " Reversing using recursion"<< endl;
+        //reverse_list_recursive(head);
         print(&head);
+	reverse_list_stack(&head);
+	print(&head);
 }
 
