@@ -92,13 +92,12 @@ void print_reverse_recursive(node *head){
         cout << p->data;
 }
 
-node* reverse_list_recursive(node *head){
-        node *p = head;
-        if (p->next == NULL){ head = p; return head; }
+void reverse_list_recursive(node *head){
+	node *p = head;
+        if (p->next == NULL){ head = p; return; }
         reverse_list_recursive(p->next);
         p->next->next = p;
         p->next = NULL;
-        return head;
 }
 
 int main(){
@@ -120,7 +119,7 @@ int main(){
         reverse(&head);
         print(&head);
         cout << " Reversing using recursion"<< endl;
-        head = reverse_list_recursive(head);
+        reverse_list_recursive(head);
         print(&head);
 }
 
