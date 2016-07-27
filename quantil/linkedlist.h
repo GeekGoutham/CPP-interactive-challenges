@@ -8,6 +8,7 @@ using namespace std;
 struct node
 {
 	string key;
+	int id_a, id_b, load_a, load_b;
 	unsigned long log_time;
 	node *next;
 };
@@ -21,7 +22,7 @@ public:
 
     linkedlist();
     
-    void insert_node( node *newnode );
+    void insert_node(node *newnode);
 //    bool remove_node( string node_key );
 //    node* get_node( string node_key );
     void print_list();

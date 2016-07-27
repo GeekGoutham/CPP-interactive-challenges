@@ -5,7 +5,7 @@ linkedlist::linkedlist(){
     length = 0;
 }
 
-void linkedlist::insert_node( node *newnode ){
+void linkedlist::insert_node(node *newnode){
     node* temp = newnode;
     temp->next = NULL;
     if (head == NULL){

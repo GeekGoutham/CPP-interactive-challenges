@@ -12,7 +12,7 @@ int directory::getfiles (string dir, vector<string> &files){
 	DIR *dp;
 	struct dirent *dir_p;
 	if((dp = opendir(dir.c_str())) == NULL) {
-		cout << "Error(" << errno << ") opening " << dir << endl;
+		cout << "Error(" << errno << ") opening " << dir << endl <<"Please provide a valid path" << endl;
 		return errno;
 	}
 
