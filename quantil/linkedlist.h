@@ -14,11 +14,11 @@ struct node
 
 class linkedlist
 {
-private:
+public:
     node *head, *tail;
     int length;
     
-public:
+
     linkedlist();
     
     void insert_node( node *newnode );
