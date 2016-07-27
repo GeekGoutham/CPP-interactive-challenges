@@ -1,35 +1,27 @@
 #include "linkedlist.h"
 
-linkedlist::linkedlist()
-{
-    head = new node;
-    head -> next = NULL;
+linkedlist::linkedlist(){
+    head = tail = NULL;
     length = 0;
 }
 
-void linkedlist::insert_node( node *newnode )
-{
-    if (!head -> next)
-    {
-        head -> next = newnode;
+void linkedlist::insert_node( node *newnode ){
+    node* temp = newnode;
+    temp->next = NULL;
+    if (head == NULL){
+	temp->next = head;
+	head = temp;
+	tail = temp;
         length++;
         return;
     }
-    node *p = head;
-    node *q = head;
-    while (q)
-    {
-        p = q;
-        q = p -> next;
-    }
-    p -> next = newnode;
-    newnode -> next = NULL;
+    tail->next = temp;
+    tail = temp;
     length++;
 }
 
-bool linkedlist::remove_node( string node_key ) //qwliurhfgoiqwurhgfoiuqwhrg
-{
-    if (!head -> next) return false;
+/*bool linkedlist::remove_node( string node_key ){
+    if (head->next) return false;
     node *p = head;
     node *q = head;
     while (q)
@@ -59,7 +51,7 @@ node* linkedlist::get_node( string node_key )
         q = p -> next;
     }
     return NULL;
-}
+}*/
 
 void linkedlist::print_list()
 {

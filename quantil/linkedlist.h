@@ -15,15 +15,15 @@ struct node
 class linkedlist
 {
 private:
-    node *head;
+    node *head, *tail;
     int length;
     
 public:
     linkedlist();
     
     void insert_node( node *newnode );
-    bool remove_node( string node_key );
-    node* get_node( string node_key );
+//    bool remove_node( string node_key );
+//    node* get_node( string node_key );
     void print_list();
     int get_length();
     ~linkedlist();
