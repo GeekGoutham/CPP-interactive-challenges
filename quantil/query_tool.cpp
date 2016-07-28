@@ -45,12 +45,22 @@ unsigned long unix_time(string &str_time){
 
 }
 
+string unix_read_time(const time_t rawtime){
+    struct tm * dt;
+    char buffer [30];
+    dt = localtime(&rawtime);
+    strftime(buffer, sizeof(buffer), "%2y-%2m-%2d %2H:%2M", dt);
+    return string(buffer);
+}
+
+
+
 void print_log(node *print_node, int id){
 	if (id == print_node->id_a){
-		cout << "(" << print_node->key << " " << print_node->id_a << " " << print_node->load_a << ") "; 
+		cout << "(" << unix_read_time(print_node->log_time + 25200) <<" " << print_node->load_a <<"% ) "; 
 	}
 	if (id == print_node->id_b){
-                cout << "(" << print_node->key << " " << print_node->id_b << " " << print_node->load_b << ") ";
+                cout << "(" << unix_read_time(print_node->log_time + 25200) <<" " << print_node->load_b <<"% ) ";
         }
 
 
@@ -130,16 +140,21 @@ int main(int argc, char* argv[]){
 			uto_time = unix_time(buffer);
 			
 
+			cout << "FRT " << ufrom_time << " TOT " << uto_time << endl; 
+
 			linkedlist obj = table.get_item_key(ip_key);
 //			if (obj == NULL) {cout << "No matching entry found"; continue;}
 			
 			node *match_ptr = obj.head;
+
 			if (obj.head->log_time > uto_time) {cout<< "No logs found in the specified time frame"; continue;}
+
 			else if((obj.head->log_time > ufrom_time) && (obj.head->log_time < uto_time)){
 				while(match_ptr->log_time <= uto_time | match_ptr->next != NULL){
 					print_log(match_ptr, id);
 					match_ptr = match_ptr->next;
-				}}
+				}
+			}
 			else if((obj.head->log_time <= ufrom_time) && (obj.tail->log_time >= uto_time)){
 				while(match_ptr->log_time == ufrom_time){ match_ptr = match_ptr->next;}
 				while(match_ptr->log_time <= uto_time){
