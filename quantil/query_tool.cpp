@@ -69,21 +69,30 @@ string query_functions::unix_read_time(const time_t rawtime){
 void query_functions::search_logs(const string &ip_k, hashtable &table,const unsigned long &ufrom_time, const unsigned long &uto_time, const int &id){
 
 	linkedlist obj = table.get_item_key(ip_k);
-	node *match_ptr = obj.head;
 
-	if (obj.head->log_time > uto_time) {cout<< "No logs found in the specified time frame"; return;}
-        else if((obj.head->log_time > ufrom_time) && (obj.head->log_time < uto_time)){
+	if(obj.head == NULL) { cout << "No logs for the specified IP address found" <<endl; return; }
+	if(!((obj.head->id_a == id) || (obj.head->id_b == id))) { cout << "No logs for the specified CPU ID found" << endl; return; }
+	node *match_ptr = obj.head;
+		
+	if (ufrom_time > uto_time) { cout << "From time must be before to time" << endl; return; }
+
+	if ((obj.head->log_time > uto_time) || (obj.tail->log_time < ufrom_time)) {cout<< "No logs found in the specified time frame"; return;}
+	
+	
+        if(obj.head->log_time > ufrom_time){
 		cout << "------------------Available logs-----------------------" << endl;
-                while((match_ptr->log_time <= uto_time) && (match_ptr->next != NULL)){
+                while(match_ptr->log_time <= uto_time){
 			print_log(match_ptr, id);
                         match_ptr = match_ptr->next;
+			if(match_ptr == NULL) return;
                 }
         }
-        else if((obj.head->log_time <= ufrom_time) && (obj.tail->log_time >= uto_time)){
+        else if(obj.head->log_time <= ufrom_time){
                 while(match_ptr->log_time != ufrom_time){ match_ptr = match_ptr->next;}
                 while(match_ptr->log_time <= uto_time){
                         print_log(match_ptr, id);
                         match_ptr=match_ptr->next;
+			if(match_ptr == NULL) return;
                 }
         }
 
@@ -166,7 +175,7 @@ int main(int argc, char* argv[]){
 	
 		cout<<"Entering interative query tool. Query examples are listed below" <<endl;
 		cout<<"  >QUERY 192.168.1.10 1 2014-10-31 00:00 2014-10-31 00:05 " <<endl;
-		cout<<"  >exit "<<endl;
+		cout<<"  >exit "<<endl << endl;
 		cout<<">";
 		while (getline(cin,inp_query)){
 			if ((inp_query == "exit") || (inp_query == "EXIT"))
@@ -176,7 +185,7 @@ int main(int argc, char* argv[]){
 			else{
 				vector<string> query_vec = qf.split(inp_query);
 				if (query_vec.size() != 7) { cout << "Please follow the pattern given in example" << endl << ">"; continue; }
-				if(query_vec[0] !="query"){ cout << " Only QUERY and exit commands are allowed" << endl << ">" ;  continue;}
+				if(!((query_vec[0] =="query")||(query_vec[0] =="QUERY"))){ cout << " Only QUERY and exit commands are allowed" << endl << ">" ;  continue;}
 
 				ip_key = query_vec[1];
 				id = qf.convert_int(query_vec[2]);

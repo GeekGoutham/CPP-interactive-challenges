@@ -24,6 +24,7 @@ void hashtable::insert_item(node *newnode){
 linkedlist hashtable::get_item_key(string node_key){
 
 	int index = hash(node_key);
+//	if(arr_ll[index] == NULL) return NULL;
 	return arr_ll[index];
 }
 
