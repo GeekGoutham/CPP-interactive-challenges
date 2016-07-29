@@ -40,7 +40,7 @@ string server::getIP(){
 
 int main(){
 	string out_1, out_2 , in_ip;
-	static unsigned long t = 1469448000;
+	static unsigned long t = 1469404800;
 	unsigned long end_t = t + 86400;
 	srand(time(0));
 	cout << "Provide IP for log gen" << endl;

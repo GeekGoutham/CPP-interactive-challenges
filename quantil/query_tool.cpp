@@ -131,9 +131,9 @@ int main(int argc, char* argv[]){
 
 		else{
 			vector<string> query_vec = split(inp_query);
-			if (query_vec.size() != 7) { cout << "Please follow the pattern given in example"; continue; }
-			cout << query_vec[0];
-			if(query_vec[0] !="query"){ cout << " Only QUERY and exit commands are allowed" << endl; continue;}
+			if (query_vec.size() != 7) { cout << "Please follow the pattern given in example" << endl << ">"; continue; }
+//			cout << query_vec[0];
+			if(query_vec[0] !="query"){ cout << " Only QUERY and exit commands are allowed" << endl << ">" ;  continue;}
 			ip_key = query_vec[1];
 			id = convert_int(query_vec[2]);
 			buffer = query_vec[3] + " " + query_vec[4];
