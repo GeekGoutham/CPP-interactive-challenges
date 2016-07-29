@@ -72,8 +72,9 @@ int linkedlist::get_length()
     return length;
 }
 
-linkedlist::~linkedlist()
+/*linkedlist::~linkedlist()
 {
+    if (head != NULL){
     node *temp = head;
     while(temp != NULL)
     {
@@ -81,5 +82,6 @@ linkedlist::~linkedlist()
         delete(temp);
 	temp = head;
     }
-        	
 }
+        	
+}*/

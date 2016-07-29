@@ -27,7 +27,7 @@ public:
 //    node* get_node( string node_key );
     void print_list();
     int get_length();
-    ~linkedlist();
+//    ~linkedlist();
 };
 
 #endif

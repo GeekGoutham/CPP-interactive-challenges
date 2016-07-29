@@ -12,8 +12,6 @@ using namespace std;
 vector<string> split(string const &input) {
 	istringstream buffer(input);
 	vector<string> ret{istream_iterator<string>{buffer}, istream_iterator<string>{}};
-//	ip_k = ret[1];
-//	id_d = stoi(ret[2], nullptr, 10);
 	return ret;
 }
 
@@ -23,12 +21,9 @@ unsigned long unix_time(string &str_time){
 	int y, m, d, h, min, date;
 	string buffer = str_time;
 	
-//	buffer = query_vec[3] + " " + query_vec[4];
 	sscanf(buffer.c_str(), "%4d-%2d-%2d %2d:%2d", &y, &m, &d,
 				&h, &min);
 
-//	buffer = query_vec[5] + " " + query_vec[6];
-//	sscanf(buffer.c_str(), "%4d-%2d-%2d %2d:%2d", &to_y, &to_m, &to_d, &to_h, &to_m);
 	
 	time(&rawtime);
 	timeinfo = localtime ( &rawtime );
@@ -74,6 +69,27 @@ unsigned long convert_ul(string const inp_str){
 	return strtoul(inp_str.c_str(), nullptr, 0);
 }
 
+/*void parse_files(const string &file_n, hashtable &tab, string const &dir_n){
+	ifstream my_file;
+        string line, name = dir_n + "/" + file_n;
+        my_file.open(name, ios::in);
+
+        if (my_file.is_open()){
+        while (getline (my_file,line)){
+		vector<string> tokens_ip = split(line);
+                node* A = new node{tokens_ip[1],convert_int(tokens_ip[2]),convert_int(tokens_ip[4]),
+                                   convert_int(tokens_ip[3]), convert_int(tokens_ip[5]),convert_ul(tokens_ip[0])};
+                tab.insert_item(A);
+        	}
+
+       my_file.close();
+       }
+
+     else cout << "Unable to open file";
+
+}*/
+
+
 int main(int argc, char* argv[]){
 	string line;
 
@@ -93,9 +109,9 @@ int main(int argc, char* argv[]){
         	ls.getfiles(dir,files);
 
 
-//	        ifstream my_file;
 
         	for (unsigned int i = 0;i < files.size();i++) {
+		//	parse_files(files[i], table, dir);
 			cout << files[i] << endl;
 			ifstream my_file;
 			string name = dir + "/" + files[i];
@@ -103,7 +119,6 @@ int main(int argc, char* argv[]){
 
         	        if (my_file.is_open()){
 				while (getline (my_file,line)){
-//					cout << line << endl;
 					vector<string> tokens_ip = split(line);
 					node* A = new node{tokens_ip[1],convert_int(tokens_ip[2]),convert_int(tokens_ip[4]),
         	                                        convert_int(tokens_ip[3]), convert_int(tokens_ip[5]),convert_ul(tokens_ip[0])};
@@ -124,7 +139,6 @@ int main(int argc, char* argv[]){
 	cout<<"  >exit "<<endl;
 	cout<<">";
 	while (getline(cin,inp_query)){
-		//cout<<inp_query<<endl;
 		if ((inp_query == "exit") || (inp_query == "EXIT"))
 			return 0;
 		else if((inp_query == "") || (inp_query == " ")) { cout<<">"; continue; }
@@ -132,7 +146,6 @@ int main(int argc, char* argv[]){
 		else{
 			vector<string> query_vec = split(inp_query);
 			if (query_vec.size() != 7) { cout << "Please follow the pattern given in example" << endl << ">"; continue; }
-//			cout << query_vec[0];
 			if(query_vec[0] !="query"){ cout << " Only QUERY and exit commands are allowed" << endl << ">" ;  continue;}
 			ip_key = query_vec[1];
 			id = convert_int(query_vec[2]);
@@ -142,10 +155,8 @@ int main(int argc, char* argv[]){
 			uto_time = unix_time(buffer);
 			
 
-//			cout << "FRT " << ufrom_time << " TOT " << uto_time << endl; 
 
 			linkedlist obj = table.get_item_key(ip_key);
-//			if (obj == NULL) {cout << "No matching entry found"; continue;}
 			
 			node *match_ptr = obj.head;
 
@@ -154,7 +165,6 @@ int main(int argc, char* argv[]){
 			else if((obj.head->log_time > ufrom_time) && (obj.head->log_time < uto_time)){
 				cout << "------------------Available logs-----------------------" << endl;
 				while((match_ptr->log_time <= uto_time) && (match_ptr->next != NULL)){
-				//	cout << "I am here 1st mod" << endl;
 					print_log(match_ptr, id);
 					match_ptr = match_ptr->next;
 				}
@@ -162,7 +172,6 @@ int main(int argc, char* argv[]){
 			else if((obj.head->log_time <= ufrom_time) && (obj.tail->log_time >= uto_time)){
 				while(match_ptr->log_time != ufrom_time){ match_ptr = match_ptr->next;}
 				while(match_ptr->log_time <= uto_time){
-				//	cout << " I am here 2nd mod" << endl;
 					print_log(match_ptr, id);
 					match_ptr=match_ptr->next;
 				}
