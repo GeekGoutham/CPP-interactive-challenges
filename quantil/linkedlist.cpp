@@ -6,6 +6,7 @@ linkedlist::linkedlist(){
 }
 
 void linkedlist::insert_node(node *newnode){
+
     node* temp = newnode;
     temp->next = NULL;
     if (head == NULL){
@@ -20,41 +21,9 @@ void linkedlist::insert_node(node *newnode){
     length++;
 }
 
-/*bool linkedlist::remove_node( string node_key ){
-    if (head->next) return false;
-    node *p = head;
-    node *q = head;
-    while (q)
-    {
-        if (q -> key == node_key)
-        {
-            p -> next = q -> next;
-            delete q;
-            length--;
-            return true;
-        }
-        p = q;
-        q = p -> next;
-    }
-    return false;
-}
 
-node* linkedlist::get_node( string node_key )
-{
-    node *p = head;
-    node *q = head;
-    while (q)
-    {
-        p = q;
-        if ((p != head) && (p -> key == node_key))
-            return p;
-        q = p -> next;
-    }
-    return NULL;
-}*/
+void linkedlist::print_list(){
 
-void linkedlist::print_list()
-{
     if (length == 0)
     {
         cout << "List : Empty";
@@ -67,21 +36,7 @@ void linkedlist::print_list()
     }
 }
 
-int linkedlist::get_length()
-{
+int linkedlist::get_length(){
+
     return length;
 }
-
-/*linkedlist::~linkedlist()
-{
-    if (head != NULL){
-    node *temp = head;
-    while(temp != NULL)
-    {
-        head = temp->next;
-        delete(temp);
-	temp = head;
-    }
-}
-        	
-}*/
