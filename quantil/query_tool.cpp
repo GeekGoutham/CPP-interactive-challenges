@@ -57,10 +57,10 @@ string unix_read_time(const time_t rawtime){
 
 void print_log(node *print_node, int id){
 	if (id == print_node->id_a){
-		cout << "(" << unix_read_time(print_node->log_time + 25200) <<" " << print_node->load_a <<"% ) "; 
+		cout << "(" << unix_read_time(print_node->log_time + 25200) <<" CPU load = " << print_node->load_a <<"% ) " << endl; 
 	}
 	if (id == print_node->id_b){
-                cout << "(" << unix_read_time(print_node->log_time + 25200) <<" " << print_node->load_b <<"% ) ";
+                cout << "(" << unix_read_time(print_node->log_time + 25200) <<" CPU load = " << print_node->load_b <<"% ) " << endl;
         }
 
 
@@ -76,8 +76,6 @@ unsigned long convert_ul(string const inp_str){
 
 int main(int argc, char* argv[]){
 	string line;
-//	string dir = string("/home/geekgoutham/CPP-interactive-challenges/quantil/log");
-
 
 	string inp_query, ip_key, buffer;
 	int id;
@@ -127,11 +125,15 @@ int main(int argc, char* argv[]){
 	cout<<">";
 	while (getline(cin,inp_query)){
 		//cout<<inp_query<<endl;
-		if (inp_query == "exit" | inp_query == "EXIT")
-			break;
-		else if(inp_query == "" | inp_query == " ") {cout<<">"; continue;}
+		if ((inp_query == "exit") || (inp_query == "EXIT"))
+			return 0;
+		else if((inp_query == "") || (inp_query == " ")) { cout<<">"; continue; }
+
 		else{
 			vector<string> query_vec = split(inp_query);
+			if (query_vec.size() != 7) { cout << "Please follow the pattern given in example"; continue; }
+			cout << query_vec[0];
+			if(query_vec[0] !="query"){ cout << " Only QUERY and exit commands are allowed" << endl; continue;}
 			ip_key = query_vec[1];
 			id = convert_int(query_vec[2]);
 			buffer = query_vec[3] + " " + query_vec[4];
@@ -140,7 +142,7 @@ int main(int argc, char* argv[]){
 			uto_time = unix_time(buffer);
 			
 
-			cout << "FRT " << ufrom_time << " TOT " << uto_time << endl; 
+//			cout << "FRT " << ufrom_time << " TOT " << uto_time << endl; 
 
 			linkedlist obj = table.get_item_key(ip_key);
 //			if (obj == NULL) {cout << "No matching entry found"; continue;}
@@ -150,14 +152,17 @@ int main(int argc, char* argv[]){
 			if (obj.head->log_time > uto_time) {cout<< "No logs found in the specified time frame"; continue;}
 
 			else if((obj.head->log_time > ufrom_time) && (obj.head->log_time < uto_time)){
-				while(match_ptr->log_time <= uto_time | match_ptr->next != NULL){
+				cout << "------------------Available logs-----------------------" << endl;
+				while((match_ptr->log_time <= uto_time) && (match_ptr->next != NULL)){
+				//	cout << "I am here 1st mod" << endl;
 					print_log(match_ptr, id);
 					match_ptr = match_ptr->next;
 				}
 			}
 			else if((obj.head->log_time <= ufrom_time) && (obj.tail->log_time >= uto_time)){
-				while(match_ptr->log_time == ufrom_time){ match_ptr = match_ptr->next;}
+				while(match_ptr->log_time != ufrom_time){ match_ptr = match_ptr->next;}
 				while(match_ptr->log_time <= uto_time){
+				//	cout << " I am here 2nd mod" << endl;
 					print_log(match_ptr, id);
 					match_ptr=match_ptr->next;
 				}
