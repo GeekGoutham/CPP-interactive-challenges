@@ -74,12 +74,12 @@ int linkedlist::get_length()
 
 linkedlist::~linkedlist()
 {
-    node *p = head;
-    while(p->next != NULL)
+    node *temp = head;
+    while(temp != NULL)
     {
-        head = p->next;
-        delete(p);
-	p = head;
+        head = temp->next;
+        delete(temp);
+	temp = head;
     }
         	
 }
