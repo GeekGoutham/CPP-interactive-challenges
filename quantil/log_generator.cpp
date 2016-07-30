@@ -1,11 +1,13 @@
+///Log generator tool to create logs for CPUs in <unixtime> <IP> <ID> <load> <ID> <load> format.
 #include<iostream>
 #include<cstdint>
 #include<cstdlib>
 #include<fstream>
 using namespace std;
 
+/*! class to implement log generator */
 class server{
-	string ip;
+	string ip; /*!< String that store IP */
 	int id_a, id_b, load;
 	
 public:
@@ -16,22 +18,26 @@ public:
 	string getIP();
 
 	
-};
+}; //class server
 
+/*! Generators load randomly */
 int server::load_generator(){
-//	srand(time(NULL));
+
 	load = rand() % 100 + 1;
 	return load;
 }
 
+/*! Returns ID of CPU A */
 int server::getID_a(){
 	return id_a;
 }
 
+/*! Returns ID of CPU B */
 int server::getID_b(){
 	return id_b;
 }
 
+/*! Returns IP address of server */
 string server::getIP(){
 	return ip;
 }

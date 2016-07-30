@@ -1,3 +1,5 @@
+///Program file that implements the directory list of files
+
 #include"lsmod.h"
 
 #include <sys/types.h>
@@ -8,6 +10,7 @@
 #include <iostream>
 using namespace std;
 
+/*! Uses dirent struct and lists all the files in a directory */
 int directory::getfiles (string dir, vector<string> &files){
 	DIR *dp;
 	struct dirent *dir_p;
@@ -17,7 +20,7 @@ int directory::getfiles (string dir, vector<string> &files){
 	}
 
 	while ((dir_p = readdir(dp)) != NULL) {
-		files.push_back(string(dir_p->d_name));
+		files.push_back(string(dir_p->d_name)); //uses a vector reference to store the file names
 	}
 	closedir(dp);
 	return 0;
